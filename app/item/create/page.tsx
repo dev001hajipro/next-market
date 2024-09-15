@@ -34,7 +34,7 @@ const CreateItem = () => {
             alert("アイテム作成失敗")
         }
     }
-
+    console.log('loginUserEmail:', loginUserEmail)
     if (loginUserEmail) {
         return (
             <div>

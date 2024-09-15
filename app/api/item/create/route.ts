@@ -13,5 +13,3 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ message: "アイテム作成失敗" })
     }
 }
-
-
