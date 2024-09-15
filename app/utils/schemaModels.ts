@@ -1,7 +1,7 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
 const Schema = mongoose.Schema
-const ItemSchema = new Schema({
+const ItemShema = new Schema({
     title: String,
     image: String,
     price: String,
@@ -12,7 +12,7 @@ const ItemSchema = new Schema({
 const UserSchema = new Schema({
     name: {
         type: String,
-        required: true
+        required: true,
     },
     email: {
         type: String,
@@ -21,9 +21,9 @@ const UserSchema = new Schema({
     },
     password: {
         type: String,
-        required: true
+        required: true,
     }
 })
 
-export const ItemModel = mongoose.models.Item || mongoose.model("Item", ItemSchema)
+export const ItemModel = mongoose.models.Item || mongoose.model("Item", ItemShema)
 export const UserModel = mongoose.models.User || mongoose.model("User", UserSchema)

@@ -2,15 +2,21 @@ import { jwtVerify } from "jose";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function middleware(request: NextRequest) {
-    // split Bearer from token
+    console.log("middleware🀄")
+    console.log(request.headers.get("Authorization"))
+                                          
     const token = await request.headers.get("Authorization")?.split(" ")[1]
+    console.log("token", token)
     if (!token) {
         //return NextResponse.redirect(new URL("/login", request.url))
         return NextResponse.json({ message: "トークンがありません" })
     }
     try {
-        const secretKey = new TextEncoder().encode(process.env.NEXT_PUBLIC_JWT_SECRET)
-        await jwtVerify(token, secretKey)
+        console.log(`🔥🤬:${process.env.JWT_SECRET}`)
+        const secretKey = new TextEncoder().encode(process.env.JWT_SECRET)
+        const decodedJwt = await jwtVerify(token, secretKey)
+        console.log("decodedJwt", decodedJwt)
+
         return NextResponse.next()
     } catch (error) {
         return NextResponse.json({ message: "トークンが正しくありません。" })
@@ -18,5 +24,9 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ["/api/item/create", "/api/item/update/:path*", "/api/item/delete/:path*"],
+    matcher: [
+        "/api/item/create",
+        "/api/item/update/:path*",
+        "/api/item/delete/:path*"
+    ]
 }

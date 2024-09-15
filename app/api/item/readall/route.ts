@@ -7,7 +7,10 @@ export async function GET() {
     try {
         await connectDB()
         const allItems = await ItemModel.find()
-        return NextResponse.json({ message: "アイテム読み取り 成功（オール）", allItems:allItems })
+        return NextResponse.json({
+            message: "アイテム読み取り 成功（オール）",
+            allItems:allItems
+        })
     } catch (error) {
         return NextResponse.json({ message: "アイテム読み取り 失敗（オール）" })
     }
