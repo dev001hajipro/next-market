@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 「Next.jsでつくるフルスタックアプリ」のNext Market をTypeScriptで実装
 
-## Getting Started
+## 書籍との違い
 
-First, run the development server:
+- TypeScriptで実装
+- 開発環境では.env.localファイルを作成
+
+## TypeScriptで実装
+
+### 一覧表示時の型
+
+TypeScriptでは、/app/page.tsxの一覧表示で型情報がないと警告を受けるので、ひとまず型情報を
+ファイルに埋め込んで対応。MongoDBは、schemaModels.tsでモデルを定義しているので、
+ここで型定義して/app/page.tsxにimportするほうがよさそう。
+
+```TypeScript
+type ItemType = {
+  _id: string
+  title: string
+  price: number
+  description: string
+  image: string
+}
+```
+
+## 開発環境では.env.localファイルを作成
+
+開発の早い段階で、データーベースのホストをソースコードに書かず、.env.localファイルを作成した。
+Next.js14では、クライアントとサーバー側のソースコードがあり、環境変数は、NEXT_PUBLIC_XXXXのように
+使い分けが必要。
+
+```bash
+NEXT_PUBLIC_JWT_SECRET=next-market-app-book
+NEXT_PUBLIC_URL=http://localhost:3000
+MONGODB_URI=<データベースのURL>
+```
+
+## メモ
+
+- Mongo Atlas(MongoDBのクラウド版) はGoogleアカウントで使える。
+- Vercelはダッシュボードから環境変数が設定できる。
+
+## 参考資料
+
+- Next.jsでつくるフルスタックアプリ　前編（バックエンド開発）: 自分ひとりだけで本格アプリを開発できるようになる本 Next.jsフルスタック
+- Next.jsでつくるフルスタックアプリ　後編（フロントエンド開発）: 自分ひとりだけで本格アプリを開発できるようになる本 Next.jsフルスタック
+
+## サーバー起動
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
